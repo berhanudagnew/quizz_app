@@ -34,7 +34,7 @@ class _QuizPageState extends State<QuizPage> {
     bool correct_answer = quizBrain.get_question_answer();
     setState(() {
       if (user_answer == correct_answer) {
-        quizBrain.next_question();
+        quizBrain.next_question(context);
         score_keeper.add(
           Icon(
             Icons.check,
@@ -42,7 +42,7 @@ class _QuizPageState extends State<QuizPage> {
           ),
         );
       } else {
-        quizBrain.next_question();
+        quizBrain.next_question(context);
         score_keeper.add(
           Icon(
             Icons.close,
@@ -118,10 +118,6 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         //TODO: Add a Row here as your score keeper
-        // Row(
-
-        //   children: score_keeper,
-        // ),
         SizedBox(
             child: new Wrap(
           spacing: 5.0,

@@ -1,4 +1,5 @@
 import 'package:quizz_app/question.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class QuizBrain {
   int _question_number = 0;
@@ -30,9 +31,15 @@ class QuizBrain {
         true),
   ];
 
-  void next_question() {
+  void next_question(context) {
     if (_question_number < _question_banck.length - 1) {
       _question_number++;
+    } else {
+      Alert(
+              context: context,
+              title: "Finished !",
+              desc: "You finished all questions.")
+          .show();
     }
   }
 
