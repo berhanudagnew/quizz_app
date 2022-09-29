@@ -118,9 +118,17 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         //TODO: Add a Row here as your score keeper
-        Row(
+        // Row(
+
+        //   children: score_keeper,
+        // ),
+        SizedBox(
+            child: new Wrap(
+          spacing: 5.0,
+          runSpacing: 5.0,
+          direction: Axis.horizontal, // main axis (rows or columns)
           children: score_keeper,
-        ),
+        )),
       ],
     );
   }
