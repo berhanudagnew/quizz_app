@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:quizz_app/quiz_brain.dart';
 
-void main() => runApp(Quizzler());
+QuizBrain quizBrain = QuizBrain();
+void main() => runApp(QuizzApp());
 
-class Quizzler extends StatelessWidget {
+class QuizzApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,6 +29,30 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> score_keeper = [];
+  void check_answer(bool user_answer) {
+    bool correct_answer = quizBrain.get_question_answer();
+    setState(() {
+      if (user_answer == correct_answer) {
+        quizBrain.next_question();
+        score_keeper.add(
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+      } else {
+        quizBrain.next_question();
+        score_keeper.add(
+          Icon(
+            Icons.close,
+            color: Colors.red,
+          ),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +65,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                quizBrain.get_question_text(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -65,7 +91,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked true.
-                print('hello');
+                check_answer(true);
               },
             ),
           ),
@@ -86,26 +112,14 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked false.
+                check_answer(false);
               },
             ),
           ),
         ),
         //TODO: Add a Row here as your score keeper
         Row(
-          children: [
-            Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-            Icon(
-              Icons.close,
-              color: Colors.red,
-            ),
-            Icon(
-              Icons.close,
-              color: Colors.red,
-            ),
-          ],
+          children: score_keeper,
         ),
       ],
     );
